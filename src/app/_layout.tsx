@@ -1,6 +1,7 @@
 import { Slot, Stack, Tabs } from 'expo-router'
 
 import '../global.css'
+import { TeamsProvider } from '@/contexts/teamsContext'
 import {
 	Roboto_400Regular,
 	Roboto_700Bold,
@@ -23,9 +24,9 @@ export default function LayoutMain() {
 	}
 
 	return (
-		<>
+		<TeamsProvider>
 			<StatusBar barStyle={'light-content'} />
 			<Slot />
-		</>
+		</TeamsProvider>
 	)
 }
