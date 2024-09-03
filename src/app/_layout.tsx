@@ -1,11 +1,12 @@
-import { Slot } from 'expo-router'
+import { Slot, Stack, Tabs } from 'expo-router'
+
 import '../global.css'
 import {
 	Roboto_400Regular,
 	Roboto_700Bold,
 	useFonts,
 } from '@expo-google-fonts/roboto'
-import { ActivityIndicator, View } from 'react-native'
+import { ActivityIndicator, StatusBar, View } from 'react-native'
 
 export default function LayoutMain() {
 	const [fontsLoaded] = useFonts({
@@ -21,5 +22,10 @@ export default function LayoutMain() {
 		)
 	}
 
-	return <Slot />
+	return (
+		<>
+			<StatusBar barStyle={'light-content'} />
+			<Slot />
+		</>
+	)
 }
