@@ -3,8 +3,17 @@ import {
 	type TeamType,
 	teamReducer,
 } from '@/reducers/TeamsReducer'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { router } from 'expo-router'
-import { type ReactNode, createContext, useContext, useReducer } from 'react'
+import {
+	type ReactNode,
+	createContext,
+	useContext,
+	useEffect,
+	useReducer,
+} from 'react'
+
+const TEAM_STORAGE_KEY = 'teamsData'
 
 type TeamsContext = {
 	team: TeamType[]
@@ -41,6 +50,34 @@ const TeamsProvider = ({ children }: { children: ReactNode }) => {
 			payload: { teamId, peopleId },
 		})
 	}
+
+	useEffect(() => {
+		const loadTeams = async () => {
+			try {
+				const storedTeams = await AsyncStorage.getItem(TEAM_STORAGE_KEY)
+				if (storedTeams) {
+					dispatchTeam({
+						type: 'INICIALIZE_FROM_STORE',
+						payload: JSON.parse(storedTeams),
+					})
+				}
+			} catch (error) {
+				console.error('Failed to load teams from storage:here', error)
+			}
+		}
+		loadTeams()
+	}, [])
+
+	useEffect(() => {
+		const saveTeams = async () => {
+			try {
+				await AsyncStorage.setItem(TEAM_STORAGE_KEY, JSON.stringify(team))
+			} catch (error) {
+				console.error('Failed to save teams to storage:', error)
+			}
+		}
+		saveTeams()
+	}, [team])
 
 	return (
 		<teamsContext.Provider

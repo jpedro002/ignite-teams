@@ -29,7 +29,6 @@ export const FormAddPeople = ({ onSubmit }: FormAddPeopleProps) => {
 					defaultValue=""
 					render={({ field: { onChange, onBlur, value } }) => (
 						<TextInput
-							keyboardType="web-search"
 							className=" rounded-lg p-4 
                               bg-custom_gray_700 text-white "
 							onBlur={onBlur}
@@ -37,6 +36,18 @@ export const FormAddPeople = ({ onSubmit }: FormAddPeopleProps) => {
 							value={value}
 							placeholderTextColor="#7C7C8A"
 							placeholder="Nome da turma"
+							returnKeyType="search"
+							onSubmitEditing={handleSubmit((data) => {
+								if (data.people.trim()) {
+									onSubmit(data)
+									reset()
+								} else {
+									setError('people', {
+										type: 'manual',
+										message: 'O campo é obrigatório',
+									})
+								}
+							})}
 						/>
 					)}
 				/>

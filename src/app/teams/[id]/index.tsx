@@ -45,7 +45,7 @@ const TeamDetails = () => {
 		<View className="mt-9 flex-1 pb-6">
 			<View className="mb-8">
 				<Text className="text-2xl font-roboto-bold text-white text-center">
-					Nome da turma
+					{currentTeam?.name}
 				</Text>
 				<Text className="text-base font-roboto-regular text-custom_gray_300 text-center">
 					adicione a galera e separe os times
@@ -82,7 +82,7 @@ const TeamDetails = () => {
 					</Text>
 				</TouchableOpacity>
 			</View>
-			<View className="mt-8 ">
+			<View className="mt-8 gap-2 ">
 				{currentTeam?.people.map((person) => {
 					if (person.subTeam !== currentSubTeam) {
 						return null

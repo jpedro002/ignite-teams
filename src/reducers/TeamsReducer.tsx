@@ -26,12 +26,17 @@ type REMOVE_PEOPLE_IN_TEAM = {
 	type: 'REMOVE_PEOPLE_IN_TEAM'
 	payload: { teamId: number; peopleId: number }
 }
+type INICIALIZE_FROM_STORE = {
+	type: 'INICIALIZE_FROM_STORE'
+	payload: { team: TeamType[] }
+}
 
 type TeamAction =
 	| ADD_TEAM
 	| ADD_PEOPLE_IN_TEAM
 	| REMOVE_PEOPLE_IN_TEAM
 	| REMOVE_TEAM
+	| INICIALIZE_FROM_STORE
 
 const teamReducer = (team: TeamType[], action: TeamAction) => {
 	switch (action.type) {
@@ -59,6 +64,9 @@ const teamReducer = (team: TeamType[], action: TeamAction) => {
 		}
 		case 'REMOVE_TEAM': {
 			return team.filter((t) => t.id !== action.payload.teamId)
+		}
+		case 'INICIALIZE_FROM_STORE': {
+			return action.payload.team || []
 		}
 
 		default:
